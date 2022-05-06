@@ -1,25 +1,26 @@
 import PropTypes from 'prop-types';
 import s from './Statistics.module.css';
 
-function getRandomHexColor() {
-  return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
-}
-
 function Statistics({ title, stats }) {
   return (
     <section className={s.statistics}>
-      {title && <h2 className={s.title}>UPLOAD STATS</h2>}
+      <h2 className={s.title}>Please leave feedback</h2>
+      <div className={s.statBtns}>
+        <button className={s.statBtn}>Good</button>
+        <button className={s.statBtn}>Neutral</button>
+        <button className={s.statBtn}>Bad</button>
+      </div>
+      <h2>Statistics</h2>
       <ul className={s.statList}>
-        {stats.map(el => (
-          <li
-            key={el.id}
-            style={{ backgroundColor: getRandomHexColor() }}
-            className={s.item}
-          >
-            <span className={s.label}>{el.label}</span>
-            <span className={s.percentage}>{`${el.percentage}%`}</span>
-          </li>
-        ))}
+        <li className={s.statItem}>
+          Good: <span className={s.count}>0</span>
+        </li>
+        <li className={s.statItem}>
+          Neutral: <span className={s.count}>0</span>
+        </li>
+        <li className={s.statItem}>
+          Bad: <span className={s.count}>0</span>
+        </li>
       </ul>
     </section>
   );
