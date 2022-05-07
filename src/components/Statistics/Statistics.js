@@ -1,40 +1,35 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import s from './Statistics.module.css';
 
-function Statistics({ title, stats }) {
+function Statistics({ good, neutral, bad, total, percentage }) {
   return (
-    <section className={s.statistics}>
-      <h2 className={s.title}>Please leave feedback</h2>
-      <div className={s.statBtns}>
-        <button className={s.statBtn}>Good</button>
-        <button className={s.statBtn}>Neutral</button>
-        <button className={s.statBtn}>Bad</button>
-      </div>
-      <h2>Statistics</h2>
-      <ul className={s.statList}>
-        <li className={s.statItem}>
-          Good: <span className={s.count}>0</span>
-        </li>
-        <li className={s.statItem}>
-          Neutral: <span className={s.count}>0</span>
-        </li>
-        <li className={s.statItem}>
-          Bad: <span className={s.count}>0</span>
-        </li>
-      </ul>
-    </section>
+    <ul className={s.statList}>
+      <li className={s.statItem}>
+        Good: <span className={s.count}>{good}</span>
+      </li>
+      <li className={s.statItem}>
+        Neutral: <span className={s.count}>{neutral}</span>
+      </li>
+      <li className={s.statItem}>
+        Bad: <span className={s.count}>{bad}</span>
+      </li>
+      <li className={s.statItem}>
+        Total: <span className={s.count}>{total}</span>
+      </li>
+      <li className={s.statItem}>
+        Positive feedback: <span className={s.count}>{percentage}%</span>
+      </li>
+    </ul>
   );
 }
 
 Statistics.propTypes = {
-  title: PropTypes.string,
-  stats: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string.isRequired,
-      label: PropTypes.string.isRequired,
-      percentage: PropTypes.number.isRequired,
-    })
-  ),
+  bad: PropTypes.number.isRequired,
+  neutral: PropTypes.number.isRequired,
+  good: PropTypes.number.isRequired,
+  total: PropTypes.number.isRequired,
+  percentage: PropTypes.number.isRequired,
 };
 
 export default Statistics;
