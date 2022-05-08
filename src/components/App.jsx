@@ -1,59 +1,53 @@
 import React, { Component } from 'react';
-import Section from './Section/Section';
-import FeedbackOptions from './FeedbackOptions/FeedbackOptions';
-import Notification from './Notification/Notification';
-import Statistics from './Statistics/Statistics';
+import { nanoid } from 'nanoid';
+import ContactForm from './ContactForm/ContactForm';
+import Filter from './Filter/Filter';
+import ContactList from './ContactList/ContactList';
 
 class App extends Component {
   state = {
-    good: 0,
-    neutral: 0,
-    bad: 0
-  }
-
-  onBtnClick = event => {
-    const { name } = event.target;
-    this.setState(prevState => ({
-      [name]: prevState[name] + 1,
-    }))
-  }
-
-  countTotalFeedback() {
-    return this.state.good + this.state.neutral + this.state.bad;
-  }
-
-  countPositiveFeedbackPercentage() {
-    if (this.countTotalFeedback()) {
-      return Math.round((this.state.good / this.countTotalFeedback()) * 100);
+  contacts: [
+    {id: 'id-1', name: 'Rosie Simpson', number: '459-12-56'},
+    {id: 'id-2', name: 'Hermione Kline', number: '443-89-12'},
+    {id: 'id-3', name: 'Eden Clements', number: '645-17-79'},
+    {id: 'id-4', name: 'Annie Copeland', number: '227-91-26'},
+  ],
+  filter: '',
+}
+  handleSubmit = (formData) => {
+    if (this.state.contacts.find(contact => contact.name === formData.name)) {
+      return alert(`${formData.name} is already in the list`);
     }
-    return 0;
+    let id = nanoid();
+    this.setState((prevState) => ({
+      contacts: [...prevState.contacts, {...formData, id}],
+    }));
+  };
+
+  handleFilter = event => {
+    this.setState({ filter: event.target.value });
+  };
+
+  handleDeleteItem = (contactId) => {
+    this.setState((prevState) => ({
+      contacts: prevState.contacts.filter(item => item.id !== contactId)
+    }))
   }
   
   render() {
+    const filter = this.state.contacts.filter(contact =>
+      contact.name.toLowerCase().includes(this.state.filter.toLocaleLowerCase())
+    );
     return (
-      <div>
-        <Section title="Please leave feedback">
-            <FeedbackOptions
-              options={Object.keys(this.state)}
-              onLeaveFeedback={this.onBtnClick}
-            />
-          </Section>
-          <Section title="Statistics">
-          {this.countTotalFeedback() === 0 ? (
-              <Notification message="There is no feedback" />) : (
-              <Statistics
-                good={this.state.good}
-                neutral={this.state.neutral}
-                bad={this.state.bad}
-                total={this.countTotalFeedback()}
-                percentage={this.countPositiveFeedbackPercentage()}
-              />
-            )}
-          </Section>
-        </div>
+      <div style={{ alignItems: 'center', padding: '50px' }}>
+        <h1>Phonebook</h1>
+        <ContactForm onSubmit={this.handleSubmit}/>
+        <h2>Contacts</h2>
+        <Filter value={this.state.filter} onFilterInput={this.handleFilter} />
+        <ContactList formData={filter} onDeleteBtnClick={this.handleDeleteItem}/>
+      </div>
     );
   }
 }
-
 
 export default App;
