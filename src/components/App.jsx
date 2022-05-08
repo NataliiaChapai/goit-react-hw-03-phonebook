@@ -16,7 +16,7 @@ class App extends Component {
 }
   handleSubmit = (formData) => {
     if (this.state.contacts.find(contact => contact.name === formData.name)) {
-      return alert(`${formData.name} is already in the list`);
+      return alert(`${formData.name} is already in contacts`);
     }
     let id = nanoid();
     this.setState((prevState) => ({
