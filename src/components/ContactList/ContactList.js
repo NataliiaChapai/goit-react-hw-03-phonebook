@@ -6,13 +6,27 @@ import ContactItem from './ContactItem/ContactItem';
 function ContactList({ formData, onDeleteBtnClick }) {
   return (
     <ul className={s.list}>
-      <ContactItem formData={formData} onDeleteBtnClick={onDeleteBtnClick} />
+      {formData.map(({ id, name, number }) => (
+        <ContactItem
+          key={id}
+          id={id}
+          name={name}
+          number={number}
+          onDeleteBtnClick={() => onDeleteBtnClick(id)}
+        />
+      ))}
     </ul>
   );
 }
 
 ContactList.propTypes = {
-  formData: PropTypes.arrayOf(PropTypes.object).isRequired,
+  formData: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+      number: PropTypes.string.isRequired,
+    })
+  ).isRequired,
   onDeleteBtnClick: PropTypes.func.isRequired,
 };
 
