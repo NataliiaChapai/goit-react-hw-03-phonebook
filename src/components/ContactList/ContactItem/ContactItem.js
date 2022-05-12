@@ -6,7 +6,11 @@ function ContactItem({ id, name, number, onDeleteBtnClick }) {
   return (
     <li className={s.item} key={id}>
       {name}: {number}
-      <button className={s.btn} type="button" onClick={onDeleteBtnClick}>
+      <button
+        className={s.btn}
+        type="button"
+        onClick={() => onDeleteBtnClick(id)}
+      >
         Delete
       </button>
     </li>

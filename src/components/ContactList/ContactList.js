@@ -12,7 +12,7 @@ function ContactList({ formData, onDeleteBtnClick }) {
           id={id}
           name={name}
           number={number}
-          onDeleteBtnClick={() => onDeleteBtnClick(id)}
+          onDeleteBtnClick={onDeleteBtnClick}
         />
       ))}
     </ul>
